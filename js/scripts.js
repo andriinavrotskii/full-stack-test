@@ -3,15 +3,43 @@ $(document).ready(function(){
         $("#content").show();
         ajaxRequest();
     });
+
+    $("#selectLang").change(function(){
+        ajaxRequest({
+            'lang': $("#selectLang option:selected").val()
+        });
+    });
+
+    $("img.status").click(function(){
+        let id = $(this).parent().find('.id').text();
+        ajaxRequestUpdateStatus(id);
+    });    
 });
 
 
-var ajaxRequest = function() {
-    $.post("/api/articles", function(data, status){
+var ajaxRequestUpdateStatus = function(id) {
+    $.get("/api/articles/id", function(data, status){
         dataObj = JSON.parse(data);
 
         if (status == 'success') {
-            generateTable(dataObj);
+            // update img
+        } else {
+            console.log('Something wrong!')
+        }
+    });    
+}
+
+
+var ajaxRequest = function(data) {
+    $.post("/api/articles", data, function(data, status){
+        dataObj = JSON.parse(data);
+
+        if (status == 'success') {
+            if (dataObj.length > 0) {
+                generateTable(dataObj);
+            } else {
+                alert('No data for selected language');
+            }
         } else {
             console.log('Something wrong!')
         }
@@ -41,21 +69,21 @@ var generateTable = function(dataObj) {
         }
 
         tableContent += 
-                "<tr><td>"
+                "<tr><td class='id'>"
                 + item.id
-                + "</td><td>"
+                + "</td><td class='title_image'>"
                 + "<img src='"
                 + content.title.title_image
                 + "'>"
-                + "</td><td>"
+                + "</td><td class='title'>"
                 + content.title.title 
                 + " <a href='" + content.url + "'>Read more</a>"
-                + "</td><td>" 
+                + "</td><td class='lang'>" 
                 + "<img src='/images/flags/"
                 + item.lang
                 + ".gif'>"
-                + "</td><td>"
-                + "<img src='/images/icons/"
+                + "</td><td class='status'>"
+                + "<img class='status' src='/images/icons/"
                 + statusName
                 + ".gif'>"
                 + "</td></tr>";

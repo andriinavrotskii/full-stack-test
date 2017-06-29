@@ -17,7 +17,7 @@ class Controller {
 
     public function articles() 
     {
-        $data = $this->articlesModel->getArticles();
+        $data = $this->articlesModel->getArticles($_POST);
         $this->returnJson($data);
 
     }

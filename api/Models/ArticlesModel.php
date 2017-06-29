@@ -3,10 +3,12 @@
 class ArticlesModel extends Model 
 {
 
-    public function getArticles()
+    public function getArticles($params)
     {
-        if (!isset($lang)) {
+        if (!isset($params['lang'])) {
             $lang = DEFAULT_LANG;
+        } else {
+            $lang = $this->validateLang($params['lang']);
         }
 
         if (!isset($articlesOnPage)) {
@@ -33,5 +35,28 @@ class ArticlesModel extends Model
         } catch(PDOException $e) {
             return $e;
         } 
+    }
+
+
+    private function validateLang($lang) 
+    {
+        switch ($lang) {
+            case 'en':
+                return 'en';
+                break;
+            case 'de':
+                return 'de';
+                break;
+            case 'es':
+                return 'es';
+                break;
+            case 'ru':
+                return 'ru';
+                break;
+            
+            default:
+                return 'en';
+                break;
+        }
     }
 }
