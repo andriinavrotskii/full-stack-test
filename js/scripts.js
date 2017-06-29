@@ -8,8 +8,7 @@ $(document).ready(function(){
 var ajaxRequest = function() {
     $.post("/api/articles", function(data, status){
         dataObj = JSON.parse(data);
-        console.log(status);
-        console.log(dataObj);
+
         if (status == 'success') {
             generateTable(dataObj);
         } else {
@@ -22,7 +21,7 @@ var ajaxRequest = function() {
 var generateTable = function(dataObj) {
         console.log('generateTable');
 
-    let tableHeader = "<table><thead><tr><th>ID</th><th>Image</th><th>Title</th><th>Language</th><th>Status</th></tr></thead><tbody>";
+    let tableHeader = "<table class='table table-striped'><thead><tr><th>ID</th><th>Image</th><th>Title</th><th>Language</th><th>Status</th></tr></thead><tbody>";
     let tableFooter = "</tbody></table>";
 
     let tableContent = "";
@@ -49,7 +48,7 @@ var generateTable = function(dataObj) {
                 + "'>"
                 + "</td><td>"
                 + content.title.title 
-                + "<a href='" + content.url + "'>Read more</a>"
+                + " <a href='" + content.url + "'>Read more</a>"
                 + "</td><td>" 
                 + "<img src='/images/flags/"
                 + item.lang
