@@ -29,18 +29,35 @@ var generateTable = function(dataObj) {
 
     dataObj.forEach(function(item, index) {
         let content = JSON.parse(item.content);
-        
+
+        if (item.status == '0') {
+            var statusName = 'eye-red';
+        } else if (item.status == '1') {
+            var statusName = 'eye-yellow';
+        } else if (item.status == '2') {
+            var statusName = 'eye-green';
+        } else {
+            var statusName = 'eye-red';
+        }
+
         tableContent += 
                 "<tr><td>"
                 + item.id
                 + "</td><td>"
+                + "<img src='"
                 + content.title.title_image
+                + "'>"
                 + "</td><td>"
                 + content.title.title 
+                + "<a href='" + content.url + "'>Read more</a>"
                 + "</td><td>" 
+                + "<img src='/images/flags/"
                 + item.lang
+                + ".gif'>"
                 + "</td><td>"
-                + item.status
+                + "<img src='/images/icons/"
+                + statusName
+                + ".gif'>"
                 + "</td></tr>";
 
     });
