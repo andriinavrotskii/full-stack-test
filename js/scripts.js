@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $("#start").click(function(){
+        $("#content").show();
         ajaxRequest();
     });
 });
